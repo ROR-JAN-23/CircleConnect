@@ -1,4 +1,4 @@
-<% if user_signed_in? %> 
+<% if user_signed_in? %>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg "  style="background-color: #00FFFF;">
   <!-- Container wrapper -->
@@ -51,10 +51,13 @@
   <a class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="https://mdbootstrap.com/img/new/avatars/1.jpg" class="rounded-circle" height="22" alt=""
                     loading="lazy" />
+                    
+                    <%# <%= image_tag current_user.avatar, class: "rounded-circle", height: "22" ,alt: "",loading: "lazy"%>
                 </a>
   <ul class="dropdown-menu">
     
-    <li><a class="dropdown-item" href="#">Add post</a></li>
+    <%# <li><a class="dropdown-item" href="#">Add post</a></li> %>
+    <%= link_to "Add_Post", new_post_path, class: "dropdown-item" %> 
     <%= button_to "Sign_out", destroy_user_session_path, class: "dropdown-item", method: :delete %>
     <%= link_to "Edit profile", edit_user_registration_path, class: "dropdown-item" %>  
   </ul>
@@ -70,7 +73,80 @@
 </nav>
 <!-- Navbar -->
 
+<% all_posts=(Post.all.order(created_at: :desc))%>
+<%all_posts.each do|post|%>
+  <div style="margin-left:450px;">
+  <h1><%=User.find(post.user_id).user_name%></h1>
+  <p><%=image_tag post.image.to_s, style:'height:30vw;width:40vw;margin-bottom:50px;'%></p></div>
+  <p><b><%=User.find(post.user_id).user_name+" "%></b><%=post.description%> 
+  <!--comment form-->
+  <div class="card my-1"> # place this card blow the post body.
+  <div class="card-body">
+    <p class="font-weight-bold">Comments</p>
+    <% @post=Post.find(post.id)%>
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div class="form-group">
+        <%= f.label 'New comment' %>
+        <%= f.text_area :comment, class: 'form-control' %>
+        <%= f.hidden_field :user_id, class: 'form-control', value: current_user.id %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+      <%post.comments.all.each do |comment| %>
+
+    <%if comment.parent_id==nil %>
+    <p><b><%=User.find(comment.user_id).user_name%></b></p>
+      <p><%=comment.comment%></p>
+    <!--Reply form-->
+    <div class="card my-1"> 
+  <div class="card-body">
+    <p class="font-weight-bold">Comments Reply</p>
+    <% @post=Post.find(post.id)%>
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div class="form-group">
+        <%= f.label 'New comment' %>
+        <%= f.text_area :comment, class: 'form-control' %>
+        <%= f.hidden_field :user_id, class: 'form-control', value: current_user.id %>
+        <%= f.hidden_field :comment_id, class: 'form-control', value: comment.id %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+    <!--Reply form-->
+      <h5>Replies are</h5>
+      <%if Comment.find_by(parent_id: comment.id)!=nil%>
+        <%Comment.where("parent_id=?", comment.id).each do|comment|%>
+        <p><%= comment.comment%></p>
+       
+        <!--Reply form-->
+    <div class="card my-1"> 
+  <div class="card-body">
+    <p class="font-weight-bold">Comments Reply</p>
+    <% @post=Post.find(post.id)%>
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div class="form-group">
+        <%= f.label 'New comment' %>
+        <%= f.text_area :comment, class: 'form-control' %>
+        <%= f.hidden_field :user_id, class: 'form-control', value: current_user.id %>
+        <%= f.hidden_field :comment_id, class: 'form-control', value: comment.id %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+    <!--Reply form-->
+      <%end %>
+       <%end%>
+    <%end %>
+
+  <%end%></p>
+    <% end %>
+  </div>
+</div>
+  <!--comment form-->
+  <%end%>
+  </div>
 <% else %>
-  <%= button_to "Sign in", new_user_session_path,  class: "btn btn-info"%>
+  <%= button_to "Sign in", new_user_session_path,  class: "btn btn-info" %>
 <% end %>
 

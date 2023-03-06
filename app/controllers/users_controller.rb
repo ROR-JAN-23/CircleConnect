@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  class UsersController < ApplicationController
     before_action :set_user, only: %i[show edit update] # probably want to keep using this
 
     # GET /users
@@ -41,4 +40,4 @@ class UsersController < ApplicationController
       params.require(:user).permit(:role, :user_name)
     end
   end
-end
+

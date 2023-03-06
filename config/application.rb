@@ -2,10 +2,11 @@ require_relative 'boot'
 require 'dotenv/load'
 
 require 'rails/all'
-
+# require "active_storage/attached"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+# require "active_storage/engine"
 
 module CircleConnect
   class Application < Rails::Application

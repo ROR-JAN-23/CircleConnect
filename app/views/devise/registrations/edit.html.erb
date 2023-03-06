@@ -9,9 +9,9 @@
       <div class="col-md-3">
         <div class="text-center">
           <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail" alt="avatar">
+           <%# <%= image_tag current_user.avatar, class: "avatar img-circle img-thumbnail", height: "22" ,alt: "avatar"%>
           <h6>Upload a different photo...</h6>
-          
-          <input type="file" class="form-control">
+           <%= f.file_field :avatar,class: "form-control" %>
         </div>
       </div>
       
@@ -83,5 +83,4 @@ body{margin-top:20px;}
 width:200px;
 height:200px;
 }			
-
 </style>
