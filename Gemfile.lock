@@ -249,6 +249,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    socialization (2.0.1)
+      activerecord
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -310,6 +312,7 @@ DEPENDENCIES
   rubocop
   sassc-rails
   selenium-webdriver
+  socialization
   sprockets-rails
   stimulus-rails
   turbo-rails
