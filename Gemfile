@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
+# gem 'carrierwave', '~> 2.2', '>= 2.2.3'
+gem 'carrierwave', '~> 1.0'
 
 gem 'devise'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -31,6 +33,7 @@ gem 'jbuilder'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
 gem 'rubocop', require: false
+gem "aws-sdk-s3", require: false
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -49,7 +52,7 @@ gem 'sassc-rails'
 
 # for load env variables
 gem 'dotenv-rails'
-
+gem 'byebug', '~> 11.1', '>= 11.1.3'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -74,4 +77,5 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem "socialization"
 end

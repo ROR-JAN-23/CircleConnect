@@ -1,0 +1,12 @@
+<div class="card my-5">
+  <div class="card-body">
+    <h1>Edit Post</h1>
+
+    <%= render 'form'%>
+
+    <div class="mt-2">
+      <%= link_to 'Destroy',Post.find(params[:id]), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mr-2' %> # moved the destroy button from index to here (optional)
+      <%= link_to 'Back', posts_path, class: 'btn btn-light' %>
+    </div>
+  </div>
+</div>
