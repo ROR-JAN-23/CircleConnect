@@ -8,20 +8,14 @@
       aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
-
     <!-- Collapsible wrapper -->
     <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
       <div class="container">
         <div class="row">
           <div class="col-md-1"></div>
           <div class="col-md-5">
-            <a class="navbar-brand" href="#"> CircleConnect
+            <a class="navbar-brand" href="users/<%="#{current_user.user_name}"%>"> <%=current_user.user_name%>
             </a>
-          </div>
-          <div class="col-md-2">
-            <form class="d-flex input-group w-auto">
-              <input type="search" class="form-control" placeholder="Search" aria-label="Search" />
-            </form>
           </div>
           <div class="col-md-3">
             <ul class="navbar-nav justify-content-center">
@@ -68,85 +62,41 @@
       </div>
     </div>
     <!-- Collapsible wrapper -->
+    <!--Search form-->
+          <div class="d-flex input-group w-auto">
+          <%= form_tag("users/:user_name", :method=>"get") do %>
+          <div class="input-group">
+            <%= search_field_tag :search, params[:user_name], placeholder: "Search Users", class: "form-control" %>
+            <div class="input-group-btn"  >
+            <%= button_tag "search for Circle", :class =>'btn btn-info glyphicon glyphicon-search',:name =>nil%>
+          </div>
+          <%end%>
+          </div>
+          <!--Search form-->
+          <%= render :template => "users/index" %> 
   </div>
   <!-- Container wrapper -->
+
 </nav>
-<!-- Navbar -->
-
-<% all_posts=(Post.all.order(created_at: :desc))%>
-<%all_posts.each do|post|%>
-  <div style="margin-left:450px;">
-  <h1><%=User.find(post.user_id).user_name%></h1>
-  <p><%=image_tag post.image.to_s, style:'height:30vw;width:40vw;margin-bottom:50px;'%></p></div>
-  <p><b><%=User.find(post.user_id).user_name+" "%></b><%=post.description%> 
-  <!--comment form-->
-  <div class="card my-1"> # place this card blow the post body.
-  <div class="card-body">
-    <p class="font-weight-bold">Comments</p>
-    <% @post=Post.find(post.id)%>
-    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-      <div class="form-group">
-        <%= f.label 'New comment' %>
-        <%= f.text_area :comment, class: 'form-control' %>
-        <%= f.hidden_field :user_id, class: 'form-control', value: current_user.id %>
-      </div>
-      <%= f.submit 'Submit', class: 'btn btn-primary' %>
-      <%post.comments.all.each do |comment| %>
-
-    <%if comment.parent_id==nil %>
-    <p><b><%=User.find(comment.user_id).user_name%></b></p>
-      <p><%=comment.comment%></p>
-    <!--Reply form-->
-    <div class="card my-1"> 
-  <div class="card-body">
-    <p class="font-weight-bold">Comments Reply</p>
-    <% @post=Post.find(post.id)%>
-    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-      <div class="form-group">
-        <%= f.label 'New comment' %>
-        <%= f.text_area :comment, class: 'form-control' %>
-        <%= f.hidden_field :user_id, class: 'form-control', value: current_user.id %>
-        <%= f.hidden_field :comment_id, class: 'form-control', value: comment.id %>
-      </div>
-      <%= f.submit 'Submit', class: 'btn btn-primary' %>
-    <% end %>
+<!-- Navbar --><p id="notice"><%= notice %></p>
+<hr>
+<% @posts=(Post.all.order(created_at: :desc))%>
+<% @posts.each do |post| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to post.description, new_post_comment_path(post) %></h5> # changed title to a link to show the post
+      <p class="card-text"><%=image_tag post.image.to_s, :size => "1085x600"%></p>
+      <% if post.liked?(current_user)%>
+        <%= button_to '♥️',destroy_like_path(post.likes.find_by(user_id: current_user.id)), method: :get, style:"color:red; border:0px; background-color:white;"%>
+        <% else %>
+        <%= button_to "♥️", like_path(post), method: "put",style:"color:black;border:0px; background-color:white;"%>
+        <% end%>
+        <p><%= post.likes.count%></p>
+      <%=render post.comments%>
+    </div>
   </div>
-</div>
-    <!--Reply form-->
-      <h5>Replies are</h5>
-      <%if Comment.find_by(parent_id: comment.id)!=nil%>
-        <%Comment.where("parent_id=?", comment.id).each do|comment|%>
-        <p><%= comment.comment%></p>
-       
-        <!--Reply form-->
-    <div class="card my-1"> 
-  <div class="card-body">
-    <p class="font-weight-bold">Comments Reply</p>
-    <% @post=Post.find(post.id)%>
-    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-      <div class="form-group">
-        <%= f.label 'New comment' %>
-        <%= f.text_area :comment, class: 'form-control' %>
-        <%= f.hidden_field :user_id, class: 'form-control', value: current_user.id %>
-        <%= f.hidden_field :comment_id, class: 'form-control', value: comment.id %>
-      </div>
-      <%= f.submit 'Submit', class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-</div>
-    <!--Reply form-->
-      <%end %>
-       <%end%>
-    <%end %>
-
-  <%end%></p>
-    <% end %>
-  </div>
-</div>
-  <!--comment form-->
-  <%end%>
-  </div>
+<% end %>
 <% else %>
   <%= button_to "Sign in", new_user_session_path,  class: "btn btn-info" %>
-<% end %>
+<% end %> 
 

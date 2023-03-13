@@ -1,0 +1,6 @@
+<%= search_form_for @q do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name_cont, class: 'form-control' %>
+<%= f.submit class: 'btn btn-primary' %>
+<% end %>
+<%= link_to "Clear", request.path, class: "btn btn-default" %>
