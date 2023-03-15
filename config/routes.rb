@@ -10,8 +10,10 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments
   end
-  put "/post/:id/like", to: "posts#like", as: "like"
+  put '/post/:id/like', to: 'posts#like', as: 'like'
   get '/post/:id/like/:id', to: 'posts#destroy_like', as: 'destroy_like'
-  get "users/:id", to: "users#show"
+  put '/post/:id/complain', to: 'posts#complain', as: 'complain'
+  get 'users/:id', to: 'users#show', as: 'show_users'
+  delete 'users/users/:id', to: 'users#destroy', as: 'destroy_user'
   resources :follows
 end

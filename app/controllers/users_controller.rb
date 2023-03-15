@@ -1,20 +1,20 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update] # probably want to keep using this
+  before_action :set_user, only: %i[edit update destroy] # probably want to keep using this
 
   # GET /users
   # GET /users.json
   def index
-    @user=User.all
+    @user = User.all
   end
-  
+
   # # GET /users/1
   # # GET /users/1.json
   def show
-    if params[:search]==nil
-      @user=User.find_by(user_name: params[:id])
-    else
-      @user=User.find_by(user_name: params[:search])
-    end
+    @user = if params[:search].nil?
+              User.find_by(user_name: params[:id])
+            else
+              User.find_by(user_name: params[:search])
+            end
   end
 
   # GET /users/1/edit
@@ -34,6 +34,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -46,4 +50,3 @@ class UsersController < ApplicationController
     params.require(:user).permit(:role, :user_name)
   end
 end
-

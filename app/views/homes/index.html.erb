@@ -86,6 +86,7 @@
     <div class="card-body">
       <h5 class="card-title"><%= link_to post.description, new_post_comment_path(post) %></h5> # changed title to a link to show the post
       <p class="card-text"><%=image_tag post.image.to_s, :size => "1085x600"%></p>
+      <%= button_to "report", complain_path(post), method: "put",style:"color:black;border:0px; background-color:white;"%>
       <% if post.liked?(current_user)%>
         <%= button_to '♥️',destroy_like_path(post.likes.find_by(user_id: current_user.id)), method: :get, style:"color:red; border:0px; background-color:white;"%>
         <% else %>

@@ -67,16 +67,16 @@
 
           <div class="actions"><br>
             <%= f.submit "Update",  class:"btn btn-primary"%>
-            <%= button_to "Delete Account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete ,  class:"btn btn-danger"%>
           </div>
           <div class="actions"><br>
-            <%= link_to "Back", :back %>
           </div>
       </div>
   </div>
 </div>
 <hr>
 <% end %>
+<div><%= button_to "Delete My Account", destroy_user_path(current_user), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete,class:"btn btn-danger"%></div>
+<%= link_to "Back", :back %>
 <style>
 body{margin-top:20px;}
 .avatar{

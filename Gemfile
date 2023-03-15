@@ -31,9 +31,9 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
+gem 'aws-sdk-s3', require: false
 gem 'redis', '~> 4.0'
 gem 'rubocop', require: false
-gem "aws-sdk-s3", require: false
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -51,8 +51,8 @@ gem 'bootsnap', require: false
 gem 'sassc-rails'
 
 # for load env variables
-gem 'dotenv-rails'
 gem 'byebug', '~> 11.1', '>= 11.1.3'
+gem 'dotenv-rails'
 gem 'ransack'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

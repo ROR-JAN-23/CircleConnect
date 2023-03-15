@@ -1,0 +1,29 @@
+<h3>Users Are</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Users</th>
+      <th scope="col">Account</th>
+      <th scope="col">Profile</th>
+    </tr>
+  </thead>
+<% User.find_each(start: 29)do |user|%>
+  <tbody>
+    <tr>
+    <td><%=user.user_name%></td>	
+      <td><%= button_to "Delete User Account", destroy_user_path(user), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete,class:"btn btn-danger"%></td>
+    <td><a class="btn btn-info" href="/users/<%="#{user.user_name}"%>">Show Profile</a></td>	
+    </tr>
+  </tbody>
+<% end %>
+</table>
+<h3>Complains Are</h3>
+<%Complain.all.each do |complain|%>
+  <%post=Post.find(complain.post_id)%>
+  <p class="card-text"><%=image_tag post.image.to_s, :size => "1085x600"%></p>
+  <%= link_to "Destroy", post_path(post), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } , class: 'btn btn-danger mr-2'%><br><br >
+  <%= button_to "Delete User Account", destroy_user_path(User.find(post.user_id)), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete,class:"btn btn-danger"%>
+  <% end %>
