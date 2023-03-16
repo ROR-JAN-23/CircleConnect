@@ -1,0 +1,13 @@
+<%post.poly_comments.all.each do |polycomment|%>
+<div class="card">
+  <div class="card-body">
+      <%=polycomment.content%>
+      <%= link_to 'reply', reply_path(polycomment,post),remote: true, class: 'd-block' %>
+      <%PolyComment.where(commentable_type: "PolyComment").each do |comment|%>
+        <% if comment.commentable_id==polycomment.id %><br>
+        <%=comment.content%>
+      <% end %>
+      <% end %>
+      </div>
+  </div> 
+<% end %>

@@ -42,12 +42,14 @@
               </li>
               <!-- Avatar -->
               <div class="dropdown">
+              
   <a class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="https://mdbootstrap.com/img/new/avatars/1.jpg" class="rounded-circle" height="22" alt=""
-                    loading="lazy" />
-                    
-                    <%# <%= image_tag current_user.avatar, class: "rounded-circle", height: "22" ,alt: "",loading: "lazy"%>
-                </a>
+  <%if current_user.avatar.attached?%>
+           <%= image_tag current_user.avatar, class: "rounded-circle", height: "50" ,alt: "avatar"%>
+           <% else %>
+          <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="rounded-circle" height="50" alt="" loading="lazy">
+          <% end %>
+  </a>
   <ul class="dropdown-menu">
     
     <%# <li><a class="dropdown-item" href="#">Add post</a></li> %>
@@ -73,7 +75,7 @@
           <%end%>
           </div>
           <!--Search form-->
-          <%= render :template => "users/index" %> 
+
   </div>
   <!-- Container wrapper -->
 
@@ -84,7 +86,7 @@
 <% @posts.each do |post| %>
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title"><%= link_to post.description, new_post_comment_path(post) %></h5> # changed title to a link to show the post
+      <h5 class="card-title"><%= link_to post.description, new_poly_comment_path(post) %></h5> # changed title to a link to show the post
       <p class="card-text"><%=image_tag post.image.to_s, :size => "1085x600"%></p>
       <%= button_to "report", complain_path(post), method: "put",style:"color:black;border:0px; background-color:white;"%>
       <% if post.liked?(current_user)%>
@@ -93,7 +95,7 @@
         <%= button_to "♥️", like_path(post), method: "put",style:"color:black;border:0px; background-color:white;"%>
         <% end%>
         <p><%= post.likes.count%></p>
-      <%=render post.comments%>
+      <%= render 'poly_comments/show', post: post%>  
     </div>
   </div>
 <% end %>

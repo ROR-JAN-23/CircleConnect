@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
+  has_many :poly_comments, as: :commentable, dependent: :destroy
   belongs_to :user
-  has_many :comments, dependent: :destroy
   mount_uploader :image, ImageUploader
   validates :user_id, presence: true
   validates :image, presence: true

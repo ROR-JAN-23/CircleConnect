@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments
   end
+  resources :poly_comments
+  get '/polycomments/new/:id', to: 'poly_comments#new', as: 'reply'
   put '/post/:id/like', to: 'posts#like', as: 'like'
   get '/post/:id/like/:id', to: 'posts#destroy_like', as: 'destroy_like'
   put '/post/:id/complain', to: 'posts#complain', as: 'complain'

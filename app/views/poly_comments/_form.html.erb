@@ -1,0 +1,21 @@
+<%= form_with(model: polycomment) do |form| %>
+ <div>
+    <% if params[:id]==nil%>
+    <h1>for comment</h1>
+    <%= form.hidden_field :commentable_id,value:(params[:format])%>
+    <%= form.hidden_field :commentable_type, value: Post%>
+    <% else %>
+    <h1>for reply</h1>
+    <%= form.hidden_field :commentable_id,value:(params[:id])%>
+    <%= form.hidden_field :commentable_type, value: PolyComment%>
+    <% end %>
+    <%= form.hidden_field :user_id, value: current_user.id%>
+  </div>
+  <div>
+    <%= form.label :comment, style: "display: block" %>
+    <%= form.text_field :content %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
