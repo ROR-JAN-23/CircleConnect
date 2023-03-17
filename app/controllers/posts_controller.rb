@@ -2,7 +2,6 @@ class PostsController < ApplicationController
   before_action :authorize_user
   def new
     @post = Post.new
-    # @post.images.build
   end
 
   def like
@@ -36,8 +35,6 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    # @post.likes.destroy_all
-    # @post.comments.destroy_all
     Post.destroy(@post.id)
     redirect_to root_path
   end

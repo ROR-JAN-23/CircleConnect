@@ -13,19 +13,20 @@
 
 			<div class="profile-user-settings">
             
-			<h1 class="profile-user-name"><%= user.user_name%></h1>
-            <% if Follow.where(follower_id: current_user.id).where(followed_user_id: user).exists?
-%>              
+			<h1 class="profile-user-name"><%= user.user_name%></h1>    
+						<% if user.follows.where(follower_id: current_user.id).exists?%>
             <%= button_to 'Unfollow', "/follows/#{user.id}",method: :delete,class: "btn btn-secondary"%>
             <% else %>
-            <%= button_to 'Follow', follows_path(@user), method: :post,class: "btn btn-primary"%>
+						<% if user!=current_user%>
+            <%= button_to 'Follow', follows_path(id:@user), method: :post,class: "btn btn-primary"%>
+						<% end %>
             <% end %>
 		  </div>
 			<div class="profile-stats">
 
 				<ul>
 					<li><span class="profile-stat-count"><%=user.posts.count%></span> posts</li>
-					<li><span class="profile-stat-count"><%=user.followers.count%></span> followers</li>
+					<li><span class="profile-stat-count"><%=user.follows.count%></span> followers</li>
 					<li><span class="profile-stat-count"><%=Follow.where(follower_id: user.id).count
 %></span> following</li>
 				</ul>
@@ -57,7 +58,7 @@
 <% if user==current_user||current_user.admin?
 %>  
 	<div class="container">
-    <%Post.where(user_id: user.id).each do|post|%>
+    <%user.posts.each do|post|%>
 		<div class="gallery">
 			<div class="gallery-item" tabindex="0">
 				 <%=image_tag post.image.to_s,class: "gallery-image"%>
@@ -81,10 +82,10 @@
 		<!-- End of gallery -->
 
 		<div class="loader"></div>
-<% elsif Follow.where(follower_id: current_user.id).where(followed_user_id: user).exists?
-%>  
+<% elsif user.follows.where(follower_id: current_user.id).exists? %>
+  
 	<div class="container">
-    <%Post.where(user_id: user.id).each do|post|%>
+    <%user.posts.each do|post|%>
 		<div class="gallery">
 			<div class="gallery-item" tabindex="0">
 				 <%=image_tag post.image.to_s,class: "gallery-image"%>
@@ -96,7 +97,7 @@
 						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><%= post.likes.count%> </li>
 						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><%= post.poly_comments.count %></li>
 					</ul>
-          </div>
+        </div>
 			</div>
 		</div>
     <% end %>

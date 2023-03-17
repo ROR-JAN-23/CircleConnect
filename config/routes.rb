@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   root 'homes#index'
   # get "follow/:id" to: "follows#follow"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+  get '/users', to: 'users#show', as: 'users'
   # Defines the root path route ("/")
   # root "articles#index"
   get 'welcome/index'
+  resources :follows
+  resources :stories
   resources :posts do
     resources :comments
   end

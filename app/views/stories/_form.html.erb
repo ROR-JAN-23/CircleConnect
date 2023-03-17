@@ -1,0 +1,13 @@
+<h1>for story</h1>
+<%= form_with(model: story) do |form| %>
+  <div>
+    <%= form.hidden_field :user_id, value: current_user.id%>
+  </div>
+  <div>
+    <%= form.file_field :story %>
+  </div>
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
