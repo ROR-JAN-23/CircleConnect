@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.0'
 # gem 'carrierwave', '~> 2.2', '>= 2.2.3'
 gem 'carrierwave', '~> 1.0'
-
+gem 'rufo'
 gem 'devise'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'
@@ -61,6 +61,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.3'
+  gem "factory_bot_rails"
 end
 
 group :development do
