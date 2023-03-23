@@ -1,0 +1,24 @@
+<if current_user.admin?>
+<table class="table">
+<thead>
+<tr>
+<th scope="col">Item_Type</th>
+<th scope="col">Event</th>
+<th scope="col">User</th>
+</tr>
+</thead>
+<% @history.each do |history| %>
+    <tbody>
+    <tr>
+    <td><%= history.item_type %></td>
+    <td><%= history.event %></td>
+    <% if history.whodunnit %>
+    <td><%= User.find(history.whodunnit).user_name %></td>
+    <% else %>
+    <td>nil</td>
+    <% end %>
+    </tr>
+    </tbody>
+    <% end %>
+</table>
+<end>

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class PolyCommentsController < ApplicationController
   before_action :set_polycomment, only: %i[show destroy]
   before_action :authorize_user
-  def index
-    @polycomment = PolyComment.all
-  end
+
+  def index; end
 
   def new
     @polycomment = PolyComment.new

@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 class StoriesController < ApplicationController
-  def index
-    @story = Story.find(params[:format])
-  end
+  def index; end
 
   def new
     @story = Story.new
@@ -12,6 +12,10 @@ class StoriesController < ApplicationController
     return unless @story.save
 
     redirect_to root_path, notice: 'Story was successfully created.'
+  end
+
+  def show
+    @story = Story.find(params[:id])
   end
 
   def destroy; end
